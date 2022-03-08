@@ -18,7 +18,7 @@ export class Secret {
   get algoHMAC() { return this.#algoHMAC; }
   get algoJWT() { return this.#algoJWT; }
 
-  issueToken({aud, exp, iss, jti, nbf, sub, ...payload}) {
+  issueToken({aud, exp, iss, jti, nbf, sub, ...payload}={}) {
     const options = {algorithm: this.algoJWT};
 
     if (!iss) options.issuer = hostname();
