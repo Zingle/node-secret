@@ -1,0 +1,30 @@
+{
+  "name": "@zingle/secret",
+  "version": "0.0.1",
+  "description": "utility library for working with application secrets",
+  "type": "module",
+  "exports": "./secret.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Zingle/node-secret.git"
+  },
+  "keywords": [
+    "jwt",
+    "token",
+    "hmac",
+    "message",
+    "authentication"
+  ],
+  "author": "Richard Remer <reanjr@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zingle/node-secret/issues"
+  },
+  "homepage": "https://github.com/Zingle/node-secret#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}
