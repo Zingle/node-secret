@@ -4,19 +4,22 @@ import jwt from "jsonwebtoken";
 
 export class Secret {
   #secret;
-  #hmac_algo; #jwt_algo;
+  #algoHMAC; #algoJWT;
 
   constructor(secret, {
-    hmac_algo="sha1",
-    jwt_algo="HS256"
+    algoHMAC="sha1",
+    algoJWT="HS256"
   }={}) {
     this.#secret = secret;
-    this.#hmac_algo = hmac_algo;
-    this.#jwt_algo = jwt_algo;
+    this.#algoHMAC = algoHMAC;
+    this.#algoJWT = algoJWT;
   }
 
+  get algoHMAC() { return this.#algoHMAC; }
+  get algoJWT() { return this.#algoJWT; }
+
   issueToken({aud, exp, iss, jti, nbf, sub, ...payload}) {
-    const options = {algorithm: this.#jwt_algo};
+    const options = {algorithm: this.algoJWT};
 
     if (!iss) options.issuer = hostname();
     if (!aud) options.audience = hostname();
@@ -29,7 +32,7 @@ export class Secret {
   }
 
   signMessage(message) {
-    const hmac = createHmac(this.#hmac_algo, this.#secret);
+    const hmac = createHmac(this.algoHMAC, this.#secret);
     const digest = hmac.update(message).digest();
     const length = Buffer.from([digest.length]);
     const mac = Buffer.concat([digest, length]).toString("hex");
@@ -42,7 +45,7 @@ export class Secret {
   }
 
   verifyMessage(signedMessage) {
-    const hmac = createHmac(this.#hmac_algo, this.#secret);
+    const hmac = createHmac(this.algoHMAC, this.#secret);
     const [data, mac] = signedMessage instanceof Buffer
       ? decodeMessageBuffer(signedMessage)
       : decodeMessageString(signedMessage);
@@ -67,7 +70,7 @@ export class Secret {
   }
 
   verifyToken(token, {age, aud, iss, sub}={}) {
-    const options = {algorithms: [this.#jwt_algo]};
+    const options = {algorithms: [this.#algoJWT]};
 
     if (age) options.maxAge = age;
     if (aud) options.audience = aud;
