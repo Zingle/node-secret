@@ -77,6 +77,10 @@ export class Secret {
     if (iss) options.issuer = iss;
     if (sub) options.subject = subject;
 
-    return jwt.verify(token, this.#secret, options);
+    try {
+      return jwt.verify(token, this.#secret, options);
+    } catch (err) {
+      return false;
+    }
   }
 }

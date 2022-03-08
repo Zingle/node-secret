@@ -102,5 +102,9 @@ describe("Secret", () => {
       expect(detail.exp).to.be.a("number");
       expect(detail.foo).to.be("bar");
     });
+
+    it("should return false if token cannot be verified", () => {
+      expect(secret.verifyToken(JSON.stringify({foo:"bar"}))).to.be(false);
+    });
   });
 });

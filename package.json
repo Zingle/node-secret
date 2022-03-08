@@ -1,6 +1,6 @@
 {
   "name": "@zingle/secret",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "utility library for working with application secrets",
   "type": "module",
   "exports": "./secret.js",
